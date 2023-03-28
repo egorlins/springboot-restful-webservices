@@ -1,0 +1,78 @@
+#run docker
+
+#download latest mysql, ":latest" is optional
+docker pull mysql:latest
+
+#check
+docker images
+REPOSITORY   TAG       IMAGE ID       CREATED      SIZE
+mysql        latest    483a8bc460a9   5 days ago   530MB
+
+#create docker network
+docker network create springboot-mysql-net
+d6e8c143e8b0fd1b6115a97ef4c3e26b5c1cf9deb585d2300113b9b6d349704b
+
+#check. bridge- can communicate with eachother
+docker network ls
+NETWORK ID     NAME                   DRIVER    SCOPE
+3144ce155bd2   bridge                 bridge    local
+54b813eaf811   host                   host      local
+441817c3c6df   none                   null      local
+d6e8c143e8b0   springboot-mysql-net   bridge    local
+
+#running detached
+docker run --name mysqldb --network springboot-mysql-net -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=employeedb -d mysql
+076e2e679528f932245a73e2068d63508f2afb477be5d876a57c2179345f8650
+
+#see detached container logs, exit ctrl+c
+docker logs -f 076e
+2023-03-28 06:04:49+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.32-1.el8 started.
+2023-03-28 06:04:49+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+
+#aceess mysql db in container
+docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS                 NAMES
+076e2e679528   mysql     "docker-entrypoint.s…"   2 minutes ago   Up 2 minutes   3306/tcp, 33060/tcp   mysqldb
+
+docker exec -it 076e bash
+bash-4.4# mysql -u root -p
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| employeedb         |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> use employeedb;
+Database changed
+mysql> show tables;
++----------------------+
+| Tables_in_employeedb |
++----------------------+
+| users                |
++----------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from users;
++----+----------------+------------+------------+
+| id | email          | first_name | last_name  |
++----+----------------+------------+------------+
+|  1 | third@jdjdj.ee | third      | third_last |
++----+----------------+------------+------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
