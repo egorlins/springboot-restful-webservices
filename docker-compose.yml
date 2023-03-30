@@ -25,3 +25,51 @@ services:
 
 networks:
   springboot-mysql-net:
+
+
+
+
+
+
+##PART3 DOCKER COMPOSE
+
+## delete old images
+
+#  D:\Git\springboot-restful-webservices>docker images
+#  REPOSITORY                       TAG           IMAGE ID       CREATED        SIZE
+#  springboot-restful-webservices   0.1.RELEASE   4cb81105d62e   47 hours ago   496MB
+#  springboot-restful-webservices   latest        4cb81105d62e   47 hours ago   496MB
+#  mysql                            latest        483a8bc460a9   7 days ago     530MB
+#
+#  D:\Git\springboot-restful-webservices>docker rmi 4cb81105d62e
+#Error response from daemon: conflict: unable to delete 4cb81105d62e (must be forced) - image is referenced in multiple repositories
+#
+#  D:\Git\springboot-restful-webservices>docker rmi -f 4cb81105d62e
+#Untagged: springboot-restful-webservices:0.1.RELEASE
+#Untagged: springboot-restful-webservices:latest
+#Deleted: sha256:4cb81105d62e369d93a0e5c256631105de69dea375a9a5523c087c9ec2f981f1
+#
+#  D:\Git\springboot-restful-webservices>docker rmi -f 483a8bc460a9
+#Untagged: mysql:latest
+#Untagged: mysql@sha256:ca114710bb35b862062fd51733a7dba1ba3e93be33e4eede442b0ce15c77b718
+#Deleted: sha256:483a8bc460a9b517dd0230cc3d475ce0a9b9e1744e7959bb538f5572ec88139f
+#
+#  D:\Git\springboot-restful-webservices>docker images
+#  REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+
+## docer compose
+#  docker-compose up
+#  docker-compose up -d
+#  [+] Running 2/2
+#  - Container mysqldb                         Started                                                                                                                                                        0.9s
+#  - Container springboot-restful-webservices  Started                                                                                                                                                        1.3s
+#
+#  docker logs -f mysqldb
+#
+# docker-compose down
+
+
+#  docker ps
+#  CONTAINER ID   IMAGE                                                           COMMAND                  CREATED          STATUS          PORTS                    NAMES
+#  98416928a940   springboot-restful-webservices-springboot-restful-webservices   "java -jar springboo…"   25 seconds ago   Up 6 seconds    0.0.0.0:8080->8080/tcp   springboot-restful-webservices
+#  84fbfe53d1c1   mysql                                                           "docker-entrypoint.s…"   25 seconds ago   Up 22 seconds   3306/tcp, 33060/tcp      mysqldb

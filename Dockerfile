@@ -8,6 +8,8 @@ COPY target/springboot-restful-webservices-0.0.1-SNAPSHOT.jar /app/springboot-re
 
 ENTRYPOINT ["java", "-jar", "springboot-restful-webservices.jar"]
 
+##PART2 SPRINGBOOT
+
 #build
 #maven disable tests
 #maven clean, package
